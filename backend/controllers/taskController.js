@@ -3,8 +3,14 @@ const Task = require('../models/Task');
 // Создание задачи
 exports.createTask = async (req, res) => {
   try {
-    const { title, description, category } = req.body;
-    const task = new Task({ title, description, category, user: req.user });
+    const { title, description, category, status } = req.body; // Добавьте status, если требуется
+    const task = new Task({ 
+      title, 
+      description, 
+      category, 
+      status: status || false, // Значение по умолчанию
+      user: req.user 
+    });
     await task.save();
     res.status(201).json(task);
   } catch (err) {
